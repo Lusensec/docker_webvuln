@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    image: hub.atomgit.com/amd64/php:8.0.30-zts-alpine3.16
+    container_name: apache_php
+    ports:
+      - "8887:80"
+    volumes:
+      - ./wwwroot:/var/www/html
+    command: php -S 0.0.0.0:80 -t /var/www/html
+    depends_on:
+      - db
+    #environment:
+      #- DB_HOST=db
+      #- DB_USER=root
+      #- DB_PASSWORD=123456
+      #- DB_NAME=my_database
+
+  db:
+    image: hub.atomgit.com/amd64/mysql:5.7.43
+    container_name: mysql_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+        #MYSQL_DATABASE: my_database
+        #MYSQL_USER: user
+        #MYSQL_PASSWORD: user_password
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+

@@ -1,0 +1,175 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- 这里引用了一个外部的css样式，可以直接看到源代码，可以复制粘贴过来 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <!--这里是css 的样式 -->
+    <style>
+        *
+        {
+            box-sizing: border-box;
+        }
+
+
+        body
+        {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #161616;
+            color: #c5a880;
+            font-family: sans-serif;
+        }
+
+
+        label
+        {
+            display: inline-block;
+            background-color: #161616;
+            padding: 16px;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 300px;
+            border-radius: 10px;
+            border: 1px solid #c5a880;
+            text-align: center;
+        }
+
+
+        ul
+        {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        .btn
+        {
+            background-color: #161616;
+            border-radius: 10px;
+            color: #c5a880;
+            border: 1px solid #c5a880;
+            padding: 16px;
+            width: 300px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        .separator
+        {
+            font-weight: bold;
+            text-align: center;
+            width: 300px;
+            margin: 16px 0px;
+            color: #a07676;
+        }
+
+
+        .title
+        {
+            color: #a07676;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+
+        .text-loading
+        {
+            font-size: 2rem;
+        }
+    </style>
+
+    <!--这里是创建了一个控制台，删除有可能影响代码运行-->
+    <script>
+        window.console = window.console || function(t) {};
+    </script>
+
+    <!----用于在嵌入式网页中自动调整父窗口的大小。-->
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+
+</head>
+<body>
+<script>
+
+
+    // 初始化场景、相机和渲染器
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // 创建一个球体作为主体
+    var geometry = new THREE.SphereGeometry(5, 32, 32);
+    var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    var sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // 创建雪花粒子效果
+    var snowTexture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/snowflake2.png');
+    var particles = new THREE.Geometry();
+    for (var i = 0; i < 5000; i++) {
+        var particle = new THREE.Vector3(
+            Math.random() * 100 - 50,
+            Math.random() * 100 - 50,
+            Math.random() * 100 - 50
+        );
+        particles.vertices.push(particle);
+    }
+    var particleMaterial = new THREE.PointsMaterial({
+        size: 1,
+        map: snowTexture,
+        blending: THREE.AdditiveBlending,
+        depthTest: false,
+        transparent: true
+    });
+    var particleSystem = new THREE.Points(particles, particleMaterial);
+    scene.add(particleSystem);
+
+    // 加载音乐
+    var audio = new Audio();
+    audio.src = 'path_to_your_audio_file.mp3';
+    audio.controls = true;
+    audio.loop = true;
+    document.body.appendChild(audio);
+
+    // 创建音频上下文
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var analyser = audioCtx.createAnalyser();
+    var source = audioCtx.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    // 创建音乐可视化效果
+    var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+    function render() {
+        requestAnimationFrame(render);
+        analyser.getByteFrequencyData(frequencyData);
+        sphere.scale.set(1 + frequencyData[0] / 100, 1 + frequencyData[0] / 100, 1 + frequencyData[0] / 100);
+        particleMaterial.size = 1 + frequencyData[0] / 50;
+        renderer.render(scene, camera);
+    }
+    render();
+
+    // 相机位置和控制
+    camera.position.z = 20;
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+
+
+</script>
+</body>
+</html>

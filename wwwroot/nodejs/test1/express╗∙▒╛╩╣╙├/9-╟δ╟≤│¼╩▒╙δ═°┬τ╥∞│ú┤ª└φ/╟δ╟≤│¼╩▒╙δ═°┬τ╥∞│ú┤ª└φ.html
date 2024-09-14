@@ -1,0 +1,48 @@
+<!--添加一个延时规则，在超过2s之后，向客户端发送一个延时信息-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX GET 请求</title>
+	<style>
+		#result{
+			width:200px;
+			height:100px;
+			border:solid 1px #09b;
+		}
+	</style>
+</head>
+<body>
+	<button>点击发送请求</button>
+	<dir id="result"></dir>
+	
+	<script>
+		const btn = document.getElementsByTagName('button')[0];
+		const result = document.getElementById('result');
+		btn.addEventListener('click',function(){
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET','http://127.0.0.1:8000/server/yanshi');
+			xhr.send();
+			//设置超时 2s 设置
+			xhr.timeout = 2000;
+			//设置超时回调
+			xhr.ontimeout = function(){
+				alert("网络异常，请稍后重试！");
+			}
+			//网络异常回调
+			xhr.onerror = function(){
+				alert("你的网络似乎出了一些问题，请稍后重试！");
+			}
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){
+					if(xhr.status >= 200 && xhr.status < 300){
+						result.innerHTML = xhr.response;
+					}else{
+						alert("响应超时");
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--http://127.0.0.1/nodejs/test1/express%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/2-%E5%8E%9F%E7%94%9FAJAX/1-GET.html-->
+<!--当我们按下按钮的时候发送GET请求，并将响应体输出到div框中-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX GET 请求</title>
+	<style>
+		#result{
+			width:200px;
+			height:100px;
+			border:solid 1px #09b;
+		}
+	</style>
+</head>
+<body>
+	<button>点击发送请求</button>
+	<dir id="result"></dir>
+	
+	<script>
+		//获取botton元素和div元素
+		const btn = document.getElementsByTagName('button')[0];
+		const result = document.getElementById("result");
+		//绑定事件
+		btn.onclick = function(){
+			//1、创建对象
+			const xhr = new XMLHttpRequest();
+			//2、做初始化、设置请求方法和URL
+			xhr.open('GET','http://127.0.0.1:8000/server');
+			//3、做发送
+			xhr.send();
+			//4、事件绑定，处理服务端返回的结果
+			//on 是当什么时候
+			//readystate 是xhr 对象中的属性值，表示状态 0(未初始化) 1(open方法指定) 2(send方法完毕) 3(服务端返回了部分结果) 4(服务端返回了所有结果)
+			//change 改变的时候触发。因此在这里会改变四次，即调用四次。
+			xhr.onreadystatechange = function(){
+				//做判断
+				if(xhr.readyState === 4){ //服务端返回了所有结果之后
+					//判断响应状态码 200 404 403 500
+					if(xhr.status >= 200 && xhr.status < 300){	//2xx判断为相应成功
+						//处理结果 行 头 空行 体
+						//1、响应行
+						//alert(xhr.status);	//status里面保存的就是响应状态码
+						//alert(xhr.statusText);  //响应状态字符串
+						//alert(xhr.getAllResponseHeaders());//所有响应头
+						//alert(xhr.response);//所有响应体
+						
+						
+						//设置result的文本
+						result.innerHTML = xhr.response;
+					}else{
+						alert('响应错误');
+					}
+					
+				}
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!--当键盘有按下事件时，向Ajax服务端发送请求，显示在div框中-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX JSON 响应</title>
+	<style>
+		#result{
+			width:200px;
+			height:100px;
+			border:solid 1px #09b;
+		}
+	</style>
+</head>
+<body>
+	<dir id="result"></dir>
+	
+	<script>
+		const result = document.getElementById('result');
+		//绑定键盘按下事件
+		window.onkeydown = function(){
+			//1、发送请求
+			const xhr = new XMLHttpRequest();
+			//第二种：设置响应体数据的类型
+			xhr.responseType = 'json';
+			//2、初始化
+			xhr.open('POST','http://127.0.0.1:8000/server');
+			//3、发送请求
+			xhr.send();
+			//4、事件绑定
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){ 
+					if(xhr.status >= 200 && xhr.status < 300){
+						//result.innerHTML = xhr.response;
+						//第一种：手动对数据进行转换
+						//let data = JSON.parse(xhr.response);
+						//result.innerHTML = data.name;
+						//第二种：设置响应体数据的类型
+						result.innerHTML = xhr.response.name;
+					}else{
+						alert("响应错误");
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

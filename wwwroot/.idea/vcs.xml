@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/CMSheji/Demo/1000php" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CMSheji/Demo/PHP-Audit-Labs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CMSheji/ecshop2.7.3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CMSheji/ecshop2.7.3/upload" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CMSheji/thinkphp_download" vcs="Git" />
+  </component>
+</project>

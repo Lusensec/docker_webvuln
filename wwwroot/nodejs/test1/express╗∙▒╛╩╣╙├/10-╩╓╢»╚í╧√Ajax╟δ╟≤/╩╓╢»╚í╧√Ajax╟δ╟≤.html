@@ -1,0 +1,44 @@
+<!--一个按钮发送Ajax请求，在请求回来之前，通过另一个按钮取消Ajax请求-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX GET 请求</title>
+	<style>
+		#result{
+			width:200px;
+			height:100px;
+			border:solid 1px #09b;
+		}
+	</style>
+</head>
+<body>
+	<button>点击发送请求</button>
+	<button>点击取消请求</button>
+	
+	<script>
+		const btns = document.querySelectorAll('button');
+		let xhr = null;
+		
+		btns[0].onclick = function(){
+			xhr = new XMLHttpRequest();
+			xhr.open('GET','http://127.0.0.1:8000/server/yanshi');
+			xhr.send();
+			
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){
+					if(xhr.status >= 200 && xhr.status < 300){
+						alert("响应成功");
+					}else{
+						alert("响应失败");
+					}
+				}
+			}
+		}
+		
+		btns[1].onclick = function(){
+			xhr.abort();
+		}
+	</script>
+</body>
+</html>

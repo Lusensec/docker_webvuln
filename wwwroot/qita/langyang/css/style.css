@@ -1,0 +1,58 @@
+#qipan_div {
+    margin: 5px 5px;
+    height: 600px;
+    width: 600px;
+    text-align: center;
+    #border: solid 1px red;
+
+    /* 设置背景图片，假设图片名为'image.jpg'，位于网站的'images'文件夹中 */
+    background-image: url('../images/qipan.jpg');
+
+    /* 其他样式属性，如背景尺寸、不重复等 */
+    background-size: cover; /* 让背景图片覆盖整个div */
+    background-repeat: no-repeat; /* 防止背景图片重复 */
+    background-position: center center; /* 背景图片居中显示 */
+}
+
+#div_lang{
+    margin: 0px 45px 45px 0px;      /*  上右下左*/
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    #border: solid 1px red;
+
+    /* 设置背景图片，假设图片名为'image.jpg'，位于网站的'images'文件夹中 */
+    background-image: url('../images/lang.png');
+
+    /* 其他样式属性，如背景尺寸、不重复等 */
+    background-size: cover; /* 让背景图片覆盖整个div */
+    background-repeat: no-repeat; /* 防止背景图片重复 */
+    background-position: center center; /* 背景图片居中显示 */
+}
+
+#div_kong{
+    margin: 0px 45px 45px 0px;      /*  上右下左*/
+    height: 60px;
+    width: 60px;
+}
+
+#div_yang{
+    margin: 0px 45px 45px 0px;      /*  上右下左*/
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    #border: solid 1px red;
+
+    /* 设置背景图片，假设图片名为'image.jpg'，位于网站的'images'文件夹中 */
+    background-image: url('../images/yang.png');
+
+    /* 其他样式属性，如背景尺寸、不重复等 */
+    background-size: cover; /* 让背景图片覆盖整个div */
+    background-repeat: no-repeat; /* 防止背景图片重复 */
+    background-position: center center; /* 背景图片居中显示 */
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 20px; /* 设置行之间的距离为20像素 */
+}
